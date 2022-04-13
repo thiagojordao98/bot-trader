@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/thiagojordao98/bot-trader/issues"
   },
-  "homepage": "https://github.com/thiagojordao98/bot-trader#readme"
+  "homepage": "https://github.com/thiagojordao98/bot-trader#readme",
+  "dependencies": {
+    "axios": "^0.26.1"
+  }
 }
