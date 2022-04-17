@@ -10,6 +10,8 @@ function calcRSI(closes) {
   return 100 - 100 / (1 + strength);
 }
 
+let bought = false;     
+
 async function processBtcUsd() {
   const axios = require('axios');
   const response = await axios.get(
@@ -27,9 +29,14 @@ async function processBtcUsd() {
   //   console.log('buy');
   // } else console.log('Wait...');
   // console.log(candle[4]);
+  if (rsi > 70 && bought) {
+    console.log('sobrecomprado');
+    bought = false;
+  } else if (rsi < 30 && !bought) {
+    console.log('sobrevendido');
+    bought = true;
+  }
 }
-if (rsi > 70) console.log('sobrecomprado');
-else if (rsi < 30) console.log('sobrevendido');
 
 // async function processEthUsd() {
 //   const axios = require('axios');
@@ -46,7 +53,7 @@ else if (rsi < 30) console.log('sobrevendido');
 //   console.log(candle[4]);
 // }
 
-setInterval(processBtcUsd, 1000);
+setInterval(processBtcUsd, 60000);
 // setInterval(processEthUsd, 1000);
 
 processBtcUsd();
