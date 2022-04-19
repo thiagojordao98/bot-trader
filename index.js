@@ -10,13 +10,18 @@ function calcRSI(closes) {
   return 100 - 100 / (1 + strength);
 }
 
-let bought = false;     
+let bought = false;
 
 async function processBtcUsd() {
   const axios = require('axios');
-  const response = await axios.get(
-    'https://api.binance.com/api/v3/klines?symbol=BTCBUSD&interval=1m',
-  );
+  const response = await axios
+    .get('https://api.binance.com/api/v3/klines?symbol=BTCBUSD&interval=1m')
+    .then((response) => {
+      console.log(response.data);
+    })
+    .then((body) => {
+      document.getElementById('price').innerHTML = body;
+    });
 
   const closes = response.data.map((candle) => parseFloat(candle[4]));
   const rsi = calcRSI(closes);
@@ -53,7 +58,7 @@ async function processBtcUsd() {
 //   console.log(candle[4]);
 // }
 
-setInterval(processBtcUsd, 60000);
+//setInterval(processBtcUsd, 1000);
 // setInterval(processEthUsd, 1000);
 
 processBtcUsd();
